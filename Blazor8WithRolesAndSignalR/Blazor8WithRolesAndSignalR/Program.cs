@@ -2,8 +2,10 @@ using Blazor8WithRolesAndSignalR.Client.Pages;
 using Blazor8WithRolesAndSignalR.Components;
 using Blazor8WithRolesAndSignalR.Components.Account;
 using Blazor8WithRolesAndSignalR.Data;
+using Blazor8WithRolesAndSignalR.Hubs;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -14,7 +16,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.Services.AddResponseCompression(opts =>
+        {
+            opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                  new[] { "application/octet-stream" });
+        });
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
@@ -45,7 +51,7 @@ public class Program
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
         var app = builder.Build();
-
+        app.UseResponseCompression();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -67,7 +73,7 @@ public class Program
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Counter).Assembly);
-
+        app.MapHub<NotificationHub>("/notificationhub");
         app.MapAdditionalIdentityEndpoints();
 
         app.Run();
