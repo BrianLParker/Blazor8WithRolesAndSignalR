@@ -88,13 +88,14 @@ namespace Blazor8WithRolesAndSignalR.Components.Account
             {
                 var userId = principal.FindFirst(options.ClaimsIdentity.UserIdClaimType)?.Value;
                 var email = principal.FindFirst(options.ClaimsIdentity.EmailClaimType)?.Value;
-
+                var roles = principal.FindAll(options.ClaimsIdentity.RoleClaimType).Select(x => x.Value);
                 if (userId != null && email != null)
                 {
                     state.PersistAsJson(nameof(UserInfo), new UserInfo
                     {
                         UserId = userId,
                         Email = email,
+                        Roles = roles.ToArray()
                     });
                 }
             }

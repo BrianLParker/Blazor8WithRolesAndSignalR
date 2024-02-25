@@ -5,3 +5,15 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new Fluent Blazor app.
+<br />
+Moderator Role: 
+<AuthorizeView Roles="Moderator">
+    <Authorized>Yes</Authorized>
+    <NotAuthorized>No</NotAuthorized>
+</AuthorizeView>
+<br />
+Administrator Role:
+<AuthorizeView Roles="Administrator">
+    <Authorized>Yes</Authorized>
+    <NotAuthorized>No</NotAuthorized>
+</AuthorizeView>

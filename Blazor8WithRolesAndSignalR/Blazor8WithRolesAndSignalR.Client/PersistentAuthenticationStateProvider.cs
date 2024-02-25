@@ -31,6 +31,11 @@ namespace Blazor8WithRolesAndSignalR.Client
                 new Claim(ClaimTypes.Name, userInfo.Email),
                 new Claim(ClaimTypes.Email, userInfo.Email) ];
 
+            if (userInfo.Roles != null)
+            {
+                claims.Concat(userInfo.Roles.Select(r => new Claim(ClaimTypes.Role, r)));
+            }
+
             authenticationStateTask = Task.FromResult(
                 new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims,
                     authenticationType: nameof(PersistentAuthenticationStateProvider)))));

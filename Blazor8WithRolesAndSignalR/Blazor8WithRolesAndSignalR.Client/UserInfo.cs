@@ -6,5 +6,6 @@ namespace Blazor8WithRolesAndSignalR.Client
     {
         public required string UserId { get; set; }
         public required string Email { get; set; }
+        public string[]? Roles { get; set; }
     }
 }
