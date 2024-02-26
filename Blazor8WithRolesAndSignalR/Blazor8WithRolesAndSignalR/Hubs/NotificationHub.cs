@@ -22,7 +22,7 @@ public class NotificationHub(ILogger<NotificationHub> logger) : Hub
             logger.LogInformation(message: "Administrator is in the House!");
         }
 
-        await Clients.Group("ModeratorsOnly")
+        await Clients.Group(groupName: "ModeratorsOnly")
             .SendAsync(method: "ReceiveMessage", "Server", $"User {Context.User.Identity!.Name} connected.");
     }
 

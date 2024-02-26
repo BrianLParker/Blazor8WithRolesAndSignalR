@@ -25,6 +25,7 @@ public class Program
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
+        builder.Services.AddControllers();
         builder.Services.AddFluentUIComponents();
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityUserAccessor>();
@@ -47,9 +48,8 @@ public class Program
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
-
+        builder.Services.AddHttpClient();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
         var app = builder.Build();
         app.UseResponseCompression();
         // Configure the HTTP request pipeline.
@@ -69,13 +69,13 @@ public class Program
         app.UseStaticFiles();
         app.UseAntiforgery();
 
+        app.MapControllers();
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()
             .AddInteractiveWebAssemblyRenderMode()
             .AddAdditionalAssemblies(typeof(Counter).Assembly);
         app.MapHub<NotificationHub>("/notificationhub");
         app.MapAdditionalIdentityEndpoints();
-
         app.Run();
     }
 }

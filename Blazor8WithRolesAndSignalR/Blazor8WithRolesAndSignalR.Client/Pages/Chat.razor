@@ -5,6 +5,7 @@
 
 @attribute [Authorize]
 @inject NavigationManager Navigation
+@inject HttpClient Http
 @implements IAsyncDisposable
 
 <PageTitle>Home</PageTitle>
@@ -21,7 +22,8 @@
         <input @bind="messageInput" size="50" />
     </label>
 </div>
-<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+<FluentButton @onclick="Send" disabled="@(!IsConnected)" Appearance="Appearance.Accent">Send</FluentButton>
+<FluentButton @onclick="HitApi" disabled="@(!IsConnected)" Appearance="Appearance.Accent">Hit Api</FluentButton>
 
 <hr>
 
@@ -40,6 +42,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Http.BaseAddress = new Uri(Navigation.BaseUri);
+
         hubConnection = new HubConnectionBuilder()
             .WithUrl(Navigation.ToAbsoluteUri("/notificationhub"))
             .Build();
@@ -60,6 +64,11 @@
         {
             await hubConnection.SendAsync("SendMessage", userInput, messageInput);
         }
+    }
+
+    private async Task HitApi()
+    {
+        await this.Http.GetAsync("Some");
     }
 
     public bool IsConnected =>
