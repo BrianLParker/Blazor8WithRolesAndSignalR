@@ -10,6 +10,7 @@
     <nav class="sitenav" aria-labelledby="main-menu" onclick="document.getElementById('navmenu-toggle').click();">
         <FluentNavMenu Id="main-menu" Width="250" Collapsible="true" Title="Navigation menu" @bind-Expanded="expanded">
             <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
+            <FluentNavLink Href="themes" Icon="@(new Icons.Regular.Size20.PaintBrush())" IconColor="Color.Accent">Themes</FluentNavLink>
             <FluentNavLink Href="counter" Icon="@(new Icons.Regular.Size20.NumberSymbolSquare())" IconColor="Color.Accent">Counter</FluentNavLink>
             <AuthorizeView>
                 <FluentNavLink Href="chat" 
@@ -36,6 +37,9 @@
             </AuthorizeView>
         </FluentNavMenu>
     </nav>
+
+    <fluent-design-theme mode="dark" primary-color="yellow" />
+    <fluent-design-theme mode="light" primary-color="#ff0000" />
 </div>
 
 @code {

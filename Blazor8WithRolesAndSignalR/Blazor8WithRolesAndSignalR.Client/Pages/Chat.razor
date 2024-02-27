@@ -1,12 +1,6 @@
 ﻿@page "/chat"
-@rendermode InteractiveAuto
-
-@using Microsoft.AspNetCore.SignalR.Client
-
+@rendermode InteractiveWebAssembly
 @attribute [Authorize]
-@inject NavigationManager Navigation
-@inject HttpClient Http
-@implements IAsyncDisposable
 
 <PageTitle>Home</PageTitle>
 
@@ -34,51 +28,3 @@
     }
 </ul>
 
-@code {
-    private HubConnection? hubConnection;
-    private List<string> messages = new List<string>();
-    private string? userInput;
-    private string? messageInput;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Http.BaseAddress = new Uri(Navigation.BaseUri);
-
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/notificationhub"))
-            .Build();
-
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-        {
-            var encodedMsg = $"{user}: {message}";
-            messages.Add(encodedMsg);
-            InvokeAsync(StateHasChanged);
-        });
-
-        await hubConnection.StartAsync();
-    }
-
-    private async Task Send()
-    {
-        if (hubConnection is not null)
-        {
-            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
-        }
-    }
-
-    private async Task HitApi()
-    {
-        await this.Http.GetAsync("Some");
-    }
-
-    public bool IsConnected =>
-        hubConnection?.State == HubConnectionState.Connected;
-
-    public async ValueTask DisposeAsync()
-    {
-        if (hubConnection is not null)
-        {
-            await hubConnection.DisposeAsync();
-        }
-    }
-}

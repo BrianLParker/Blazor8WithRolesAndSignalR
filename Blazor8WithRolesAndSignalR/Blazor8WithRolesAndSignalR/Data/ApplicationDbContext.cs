@@ -43,6 +43,32 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                SecurityStamp = "HULL3RUQ53EXBH7OIQKBPSTDHHUJE36J",
                ConcurrencyStamp = "d95f09c1-a166-434a-9207-24ec56f6e6c4",
                LockoutEnabled = true
+            },
+            new ApplicationUser
+            {
+               Id = "9aec66ee-db18-499e-9b0d-24f2e100b882",
+               UserName = "sally@sally.com",
+               NormalizedUserName = "SALLY@SALLY.COM",
+               Email ="sally@sally.com",
+               NormalizedEmail = "SALLY@SALLY.COM",
+               EmailConfirmed = true,
+               PasswordHash = "AQAAAAIAAYagAAAAEERZ/Fm8OS2jn3C1ZFm4KVax9pjknE+7nkSEteI2VI/PTln2fbZQcJCpcYYhuYyPpg==",
+               SecurityStamp = "HULL3RUQ53EXBH7OIQKBPSTDHHUJE36J",
+               ConcurrencyStamp = "d95f09c1-a166-434a-9207-24ec56f6e6c4",
+               LockoutEnabled = true
+            },
+            new ApplicationUser
+            {
+               Id = "e496845c-71bd-4517-afa9-81c8f59d83cc",
+               UserName = "joe@joe.com",
+               NormalizedUserName = "JOE@JOE.COM",
+               Email ="joe@joe.com",
+               NormalizedEmail = "JOE@JOE.COM",
+               EmailConfirmed = true,
+               PasswordHash = "AQAAAAIAAYagAAAAEERZ/Fm8OS2jn3C1ZFm4KVax9pjknE+7nkSEteI2VI/PTln2fbZQcJCpcYYhuYyPpg==",
+               SecurityStamp = "HULL3RUQ53EXBH7OIQKBPSTDHHUJE36J",
+               ConcurrencyStamp = "d95f09c1-a166-434a-9207-24ec56f6e6c4",
+               LockoutEnabled = true
             }
         ];
 
@@ -52,6 +78,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             {
                RoleId = "19d34cdf-507b-4a2f-a5ab-66018c887db5",
                UserId = "9c3e219c-1e63-4628-9b08-bc76ef648729"
+            },
+            new IdentityUserRole<string>
+            {
+               RoleId = "19d34cdf-507b-4a2f-a5ab-66018c887db5",
+               UserId = "9aec66ee-db18-499e-9b0d-24f2e100b882"
             },
             new IdentityUserRole<string>
             {
